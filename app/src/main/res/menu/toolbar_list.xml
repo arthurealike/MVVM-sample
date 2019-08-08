@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_gravity="center|left">
+    <group>
+        <item
+            android:id="@+id/menu_1"
+            android:title="Settings" />
+        <item
+            android:id="@+id/menu_2"
+            android:title="Feedback" />
+
+        <item
+            android:id="@+id/menu_3"
+            android:title="Listing"
+            android:icon="@drawable/ic_view_list_grey_24dp"
+            app:showAsAction="always"/>
+    </group>
+    </menu>

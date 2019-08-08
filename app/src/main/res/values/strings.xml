@@ -1,0 +1,43 @@
+<resources>
+    <string name="app_name">SampleProject</string>
+    <string name="title">The New York Times</string>
+    <string name="sample_article">Note to teachers: This is our last Article of the Day for the 2018-19 school year. Also, the video featuring Princess Nokia includes some curse words. Please be sure to preview it before showing it to students to make sure it is appropriate for your class.
+
+Before reading the articleEntity:
+
+Nearly 40 years ago, Frank Sinatra sang, “If I can make it there, I’ll make it anywhere / It’s up to you, New York, New York.” And more recently Alicia Keys sang, “Concrete jungle where dreams are made of / There’s nothing you can’t do / Now you’re in New York.”
+
+Have you ever had dreams of making it big as a performer?
+
+In today’s articleEntity, The New York Times Magazine celebrates 12 performers — ages 13 to 72, including a gospel singer and a sword swallower — trying to make it in New York City.
+
+First, scroll through the articleEntity and watch each video clip showcasing the 12 performers.
+
+</string>
+    <string name="sample_article2">What do you notice about the performers profiled in the articleEntity? What do you imagine are the pleasures and rewards for their types of performances? What do you imagine are the challenges?
+
+Now, choose ONE of the 12 profiles in “A Star Is Made: 12 Performers Show What It Takes to Light Up the Stage in New York City.” Read the articleEntity, watch the accompanying video and answer the following questions:
+
+1. Why did you select the articleEntity and performer you did? What did you find interesting about the person or type of performance?
+
+2. Why did your performer choose that specific type of performance? What first drew her or him to it?</string>
+
+    <string-array name="navigation_menu">
+        <item>Home</item>
+        <item>Search</item>
+        <item>Base</item>
+        <item>Folder</item>
+        <item>Profile</item>
+    </string-array>
+
+    <string name="Profile_name">Arthur</string>
+    <string name="Profile_age">19</string>
+    <string name="Profile_Description">The baddest man alive.!</string>
+
+
+    <string name="nav_home">Home</string>
+    <string name="nav_search">Search</string>
+    <string name="nav_base">Base</string>
+    <string name="nav_folder">Archive</string>
+    <string name="nav_profile">Profile</string>
+</resources>

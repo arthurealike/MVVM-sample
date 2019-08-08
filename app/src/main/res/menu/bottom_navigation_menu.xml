@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/bnm_home"
+        android:icon="@drawable/ic_home_black_24dp"
+        android:title="@string/nav_home"
+        app:showAsAction="always|withText" />
+
+    <item
+        android:id="@+id/bnm_search"
+        android:icon="@drawable/ic_search_black_24dp"
+        android:title="@string/nav_search"
+        app:actionViewClass="android.widget.SearchView"
+        app:showAsAction="withText" />
+    <item
+        android:id="@+id/bnm_base"
+        android:icon="@drawable/ic_add_circle_outline_black_24dp"
+        android:title="@string/nav_base"
+        app:showAsAction="withText" />
+    <item
+        android:id="@+id/bnm_archive"
+        android:icon="@drawable/ic_archive_black_24dp"
+        android:title="@string/nav_folder"
+        app:showAsAction="withText" />
+
+    <item
+        android:id="@+id/bnm_profile"
+        android:icon="@drawable/ic_account_circle_black_24dp"
+        android:title="@string/nav_profile"
+        app:showAsAction="withText" />
+
+</menu>
