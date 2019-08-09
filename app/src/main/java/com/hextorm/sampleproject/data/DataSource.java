@@ -9,6 +9,7 @@ import java.util.List;
 public interface DataSource {
 
     void getArticles(@NonNull final LoadArticlesCallback callback);
+    void getArticles(@NonNull final LoadArticlesCallback callback,String keyword);
     void getArticle(@NonNull final LoadArticlesCallback callback);
 
     void saveArticles(List<Article> articles);

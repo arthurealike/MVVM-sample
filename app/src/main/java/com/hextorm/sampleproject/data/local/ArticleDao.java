@@ -25,6 +25,9 @@ public interface ArticleDao {
     @Delete
     void delete(ArticleEntity articleEntity);
 
+    @Query("SELECT * FROM article_table WHERE title like :keyword")
+    List<ArticleEntity> getArticlesByKeyword(String keyword);
+
     @Query("SELECT * FROM article_table WHERE title = :title_name")
     ArticleEntity getArticleByTitle(String title_name);
 

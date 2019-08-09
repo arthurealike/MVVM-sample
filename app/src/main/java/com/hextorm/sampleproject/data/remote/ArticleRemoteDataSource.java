@@ -1,5 +1,6 @@
 package com.hextorm.sampleproject.data.remote;
 
+import android.content.Context;
 import android.support.annotation.NonNull;
 import android.util.Log;
 
@@ -8,6 +9,7 @@ import com.hextorm.sampleproject.Constants;
 import com.hextorm.sampleproject.RetroClient;
 import com.hextorm.sampleproject.data.DataSource;
 import com.hextorm.sampleproject.model.ArticleApiResponseWrapper;
+import com.hextorm.sampleproject.model.SearchedArticleApiResponse;
 
 import java.util.List;
 
@@ -22,7 +24,7 @@ public class ArticleRemoteDataSource implements DataSource {
     static ArticleRemoteDataSource INSTANCE;
 
     public static ArticleRemoteDataSource getInstance() {
-        if (INSTANCE==null)
+        if (INSTANCE == null)
             INSTANCE = new ArticleRemoteDataSource();
         return INSTANCE;
 
@@ -32,23 +34,23 @@ public class ArticleRemoteDataSource implements DataSource {
         restAPI = RetroClient.getRetrofit().create(RestAPI.class);
     }
 
-    public void getPopularArticles(@NonNull final LoadArticlesCallback callback) {
+    public void getArticles(@NonNull final LoadArticlesCallback callback) {
 
         Log.d("RemoteDataSource: ", "getArticles: " + "has just entered the method");
         restAPI.getPopularArticles(Constants.API_KEY).enqueue(new Callback<ArticleApiResponseWrapper>() {
             @Override
             public void onResponse(Call<ArticleApiResponseWrapper> call, Response<ArticleApiResponseWrapper> response) {
-                Log.d("RemoteDataSource: ","onResponse: " + "entered onResponse method");
-                Log.d("RemoteDataSource: Url : " ,restAPI.getPopularArticles(Constants.API_KEY).request().url().toString());
+                Log.d("RemoteDataSource: ", "onResponse: " + "entered onResponse method");
+                Log.d("RemoteDataSource: Url : ", restAPI.getPopularArticles(Constants.API_KEY).request().url().toString());
                 callback.onTaskLoaded(response.body().convert());
 
-               if(response.body() == null || response.body().getList().isEmpty() || !response.isSuccessful()) {
-                   Log.e("RemoteDataSource: "," There will be exist some problems");
-               }
-               if(response.isSuccessful()) {
-                  // apiResponseModel = response.body();
-                   Log.d("RemoteDataSource: ", "on response.isSuccessful");
-               }
+                if (response.body() == null || response.body().getList().isEmpty() || !response.isSuccessful()) {
+                    Log.e("RemoteDataSource: ", " There will be exist some problems");
+                }
+                if (response.isSuccessful()) {
+                    // apiResponseModel = response.body();
+                    Log.d("RemoteDataSource: ", "on response.isSuccessful");
+                }
             }
 
             @Override
@@ -61,17 +63,27 @@ public class ArticleRemoteDataSource implements DataSource {
     }
 
     @Override
-    public void getArticles(@NonNull final LoadArticlesCallback callback) {
+    public void getArticles(@NonNull final LoadArticlesCallback callback,String keyword) {
+
+        restAPI.getSearchedArticles(keyword, Constants.API_KEY).enqueue(new Callback<SearchedArticleApiResponse>() {
+            @Override
+            public void onResponse(Call<SearchedArticleApiResponse> call, Response<SearchedArticleApiResponse> response) {
+                Log.d("RemoteDataSource: ", "onResponse: " + "entered onResponse method");
+                Log.d("RemoteDataSource: Url : ", restAPI.getSearchedArticles("recep", Constants.API_KEY).request().url().toString());
+                callback.onTaskLoaded(response.body().getResponse().convert());
+            }
+
+            @Override
+            public void onFailure(Call<SearchedArticleApiResponse> call, Throwable t) {
+                callback.onDataNotAvailable();
+            }
+        });
+
     }
 
     @Override
     public void getArticle(@NonNull LoadArticlesCallback callback) {
 
-    }
-
-//    @Override
-    public void getArticle(@NonNull final LoadArticlesCallback callback,String articleName) {
-       // restAPI.getSpesificArticle(articleName).
     }
 
     @Override

@@ -1,6 +1,7 @@
 package com.hextorm.sampleproject.data;
 
 import android.arch.lifecycle.MutableLiveData;
+import android.provider.ContactsContract;
 import android.support.annotation.NonNull;
 
 import com.hextorm.sampleproject.Article;
@@ -11,29 +12,35 @@ import java.util.List;
 
 public class ArticleRepository implements DataSource {
 
-    private final ArticleRemoteDataSource remoteDataSource;
-    private final ArticleLocalDataSource localDataSource;
+    private final DataSource remoteDataSource;
+    private final DataSource localDataSource;
 
     private MutableLiveData<List<Article>> articleList = new MutableLiveData<>();
 
     static ArticleRepository INSTANCE;
 
-    public static ArticleRepository getInstance(ArticleRemoteDataSource remoteDataSource,
-                                                ArticleLocalDataSource localDataSource) {
+    public static ArticleRepository getInstance(DataSource remoteDataSource,
+                                                DataSource localDataSource) {
         if (INSTANCE == null)
             INSTANCE = new ArticleRepository(remoteDataSource, localDataSource);
         return INSTANCE;
 
     }
 
-    public ArticleRepository(ArticleRemoteDataSource remoteDataSource, ArticleLocalDataSource localDataSource) {
+    public ArticleRepository(DataSource remoteDataSource, DataSource localDataSource) {
         this.remoteDataSource = remoteDataSource;
         this.localDataSource = localDataSource;
     }
 
     @Override
     public void getArticles(@NonNull final LoadArticlesCallback callback) {
-        remoteDataSource.getPopularArticles(callback);
+        remoteDataSource.getArticles(callback);
+       // remoteDataSource.getArticles(callback);
+    }
+
+    @Override
+    public void getArticles(@NonNull LoadArticlesCallback callback, String keyword) {
+        remoteDataSource.getArticles(callback,keyword);
     }
 
     @Override

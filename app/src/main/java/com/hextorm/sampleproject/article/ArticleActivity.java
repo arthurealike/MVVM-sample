@@ -72,6 +72,8 @@ public class ArticleActivity extends AppCompatActivity implements ArticleNavigat
 
         isConnectionAvailable.setValue(true);
 
+
+
         Constants.getUrl();
 
         //View binding

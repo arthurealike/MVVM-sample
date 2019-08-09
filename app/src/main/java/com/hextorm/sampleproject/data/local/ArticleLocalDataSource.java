@@ -4,7 +4,7 @@ import android.support.annotation.NonNull;
 
 import com.hextorm.sampleproject.Article;
 import com.hextorm.sampleproject.ArticleEntity;
-import com.hextorm.sampleproject.article.IArticle;
+
 import com.hextorm.sampleproject.data.DataSource;
 import com.hextorm.sampleproject.model.ArticleEntityWrapper;
 
@@ -46,9 +46,13 @@ public class ArticleLocalDataSource implements DataSource {
     }
 
     @Override
-    public void getArticle(@NonNull final LoadArticlesCallback callback) {
-
-
+    public void getArticles(@NonNull LoadArticlesCallback callback, String keyword) {
+        List<ArticleEntity> articleEntities = new ArrayList<>();
+        articleEntities = articleDao.getArticlesByKeyword(keyword);
+        if(articleEntities.isEmpty()) {
+            callback.onDataNotAvailable();
+            return;
+        }
     }
 
     @Override
@@ -60,6 +64,17 @@ public class ArticleLocalDataSource implements DataSource {
                     , article.getmViews(), article.ismIsFavourite()));
         }
         articleDao.insertAll(articleEntities);
+    }
+
+    /**
+     * These functions would be useful for later
+     * currently, no sense to use them
+     * @param callback
+     */
+
+    @Override
+    public void getArticle(@NonNull final LoadArticlesCallback callback) {
+
     }
 
     @Override
