@@ -7,6 +7,12 @@
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="android:statusBarColor">@color/colorPrimaryDark</item>
 
+        <item name="actionMenuTextColor">@color/colorGray</item>
+
+    </style>
+
+    <style name="mSearchView" parent="Widget.AppCompat.SearchView">
+        <item name="searchIcon">@drawable/ic_action_search</item>
     </style>
 
     <style name="AppTheme.OverlapSystemBar" parent="AppTheme">

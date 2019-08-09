@@ -3,6 +3,9 @@ package com.hextorm.sampleproject.article;
 
 import android.app.ProgressDialog;
 
+import android.arch.lifecycle.MutableLiveData;
+import android.arch.lifecycle.Observer;
+import android.content.IntentFilter;
 import android.databinding.DataBindingUtil;
 
 import android.graphics.PorterDuff;
@@ -23,6 +26,7 @@ import android.view.View;
 
 
 import com.hextorm.sampleproject.Constants;
+import com.hextorm.sampleproject.utils.NetworkStateReceiver;
 import com.hextorm.sampleproject.ViewPagerAdapter;
 import com.hextorm.sampleproject.R;
 
@@ -31,7 +35,6 @@ import com.hextorm.sampleproject.articlebase.BaseFragment;
 import com.hextorm.sampleproject.articleprofile.ProfileFragment;
 import com.hextorm.sampleproject.articlesearch.SearchFragment;
 import com.hextorm.sampleproject.databinding.ActivityMainBinding;
-import com.hextorm.sampleproject.utils.NetworkState;
 import com.hextorm.sampleproject.utils.PopMessages;
 
 import java.util.ArrayList;
@@ -46,29 +49,39 @@ public class ArticleActivity extends AppCompatActivity implements ArticleNavigat
     public static final int ARCHIVE_FRAGMENT = 3;
     public static final int PROFILE_FRAGMENT = 4;
 
+    // for IntentFilter of Broadcast Receiver
+    public static final String RECEIVER_ACTION = "android.net.conn.CONNECTIVITY_CHANGE";
 
     public static final int MAIN_ACTIVITY_FRAGMENT_COUNT = 5;
+
+    public static MutableLiveData<Boolean> isConnectionAvailable = new MutableLiveData<>();
 
 
     //View binding
     ActivityMainBinding binding;
 
-    // MutableLiveData<NavController>
-
     ArticleFragment articleFragment;
 
     ViewPagerAdapter viewPagerAdapter;
+
+    NetworkStateReceiver broadcastReceiver;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
+        isConnectionAvailable.setValue(true);
+
         Constants.getUrl();
-
-
 
         //View binding
         binding = DataBindingUtil.setContentView(this, R.layout.activity_main);
+
+        Observer<Boolean> snackBarObserver = (Boolean visibility) -> {
+            PopMessages.makeConnectivityCheckSnack(binding.bottomNavigationView, this, visibility);
+        };
+
+        isConnectionAvailable.observe(this, snackBarObserver);
 
         setUpToolBar();
         setUpBottomNavigationBar();
@@ -76,19 +89,19 @@ public class ArticleActivity extends AppCompatActivity implements ArticleNavigat
 
         articleFragment = new ArticleFragment();
 
-        //replaceFragment(articleFragment);
-
         binding.collapsingToolBar.setTitleEnabled(false);
 
         binding.toolbar.setTitle("");
 
-        PopMessages.makeConnectivityCheckSnack(binding.relativeLayout,this,NetworkState.haveNetworkConnection(this));
+        broadcastReceiver = new NetworkStateReceiver(binding.relativeLayout);
+        registerReceiver(broadcastReceiver, new IntentFilter(RECEIVER_ACTION));
+
     }
 
     @Override
     protected void onResume() {
         super.onResume();
-        PopMessages.makeConnectivityCheckSnack(binding.relativeLayout,this,NetworkState.haveNetworkConnection(this));
+        //PopMessages.makeConnectivityCheckSnack(binding.relativeLayout,this,NetworkState.haveNetworkConnection(this));
     }
 
     @Override
@@ -166,7 +179,11 @@ public class ArticleActivity extends AppCompatActivity implements ArticleNavigat
                 break;
             case R.id.menu_3:
                 //onLoading();
-                articleFragment.changeListType();
+                int pos = binding.viewPager.getCurrentItem();
+                Fragment activeFragment = viewPagerAdapter.getItem(pos);
+                if (pos == 0) {
+                    ((ArticleFragment) activeFragment).changeListType();
+                }
                 break;
         }
         return true;
@@ -203,17 +220,52 @@ public class ArticleActivity extends AppCompatActivity implements ArticleNavigat
         binding.viewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
             @Override
             public void onPageScrolled(int i, float v, int i1) {
+                if (v == 0) {
+                    if (i == 0) {
+                        binding.toolbar.getMenu().clear();
+                        binding.toolbar.inflateMenu(R.menu.toolbar_list);
+                    }
+                    else if(i == 1) {
+                        binding.toolbar.getMenu().clear();
+                        binding.toolbar.inflateMenu(R.menu.toolbar_search);
+                        binding.toolbar.getOverflowIcon().setColorFilter(getResources().getColor(R.color.colorGray), PorterDuff.Mode.SRC_ATOP);
+                        binding.toolbar.getMenu().findItem(R.id.toolbar_search_item).setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
+                            @Override
+                            public boolean onMenuItemClick(MenuItem item) {
+                                binding.bottomNavigationView.setVisibility(View.GONE);
+                                binding.bottomNavigationView.setClickable(false);
+                                return true;
+                            }
+                        });
+                    }
+                    else {
+                        binding.toolbar.getMenu().clear();
+                        binding.toolbar.inflateMenu(R.menu.toolbar_default);
+                    }
+                }
+                else {
+                    binding.toolbar.getMenu().clear();
+                }
 
+                /*
                 try {
                     if (i == 0) {
+                        binding.toolbar.getMenu().clear();
+                        binding.toolbar.inflateMenu(R.menu.toolbar_list);
                         binding.toolbar.getMenu().findItem(R.id.menu_3).setVisible(true);
                     } else {
+                        if (i == 1) {
+                            binding.toolbar.getMenu().clear();
+                            binding.toolbar.inflateMenu(R.menu.toolbar_search);
+                        }
+
                         binding.toolbar.getMenu().findItem(R.id.menu_3).setVisible(false);
                     }
                 } catch (NullPointerException e) {
                     Log.e(e.getClass().getSimpleName(), e.getMessage());
                 }
 
+*/
                 //binding.toolbar.setVisibility(View.GONE);
 
 

@@ -3,8 +3,8 @@
     xmlns:android="http://schemas.android.com/apk/res/android">
 
     <item
-        android:id="@+id/app_bar_search"
-        android:icon="@drawable/ic_action_search"
+        android:id="@+id/toolbar_search_item"
+        android:icon="@drawable/no_profile_pic"
         android:title="@string/nav_search"
         app:actionViewClass="android.widget.SearchView"
         app:showAsAction="always" />

@@ -13,4 +13,5 @@ public class Injection {
        ArticleDatabase database = ArticleDatabase.getInstance(context);
        return ArticleRepository.getInstance(ArticleRemoteDataSource.getInstance(), ArticleLocalDataSource.getInstance(database.articleDao()));
    }
+
 }

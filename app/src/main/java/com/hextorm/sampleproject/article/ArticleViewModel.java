@@ -15,7 +15,6 @@ import com.hextorm.sampleproject.MyApplication;
 import com.hextorm.sampleproject.data.ArticleRepository;
 
 import com.hextorm.sampleproject.data.DataSource;
-import com.hextorm.sampleproject.utils.NetworkState;
 
 
 import java.util.List;
@@ -39,7 +38,7 @@ public class ArticleViewModel extends ViewModel implements DataSource.LoadArticl
         this.mContext = MyApplication.getAppContext();
         this.mArticleRepository = Injection.provideRepository(mContext);
 
-        networkState.postValue(NetworkState.haveNetworkConnection(mContext));
+//        networkState.postValue(NetworkState.haveNetworkConnection(mContext));
         articleListState.postValue(false);
         progressBarVisibility.setValue(true);
 

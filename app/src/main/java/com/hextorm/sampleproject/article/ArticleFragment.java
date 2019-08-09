@@ -87,18 +87,20 @@ public class ArticleFragment extends Fragment {
     }
 
     void changeListType() {
+
         LayoutAnimationController animationController = null;
         if (Constants.isAlternative) {
             Constants.isAlternative = false;
-            animationController = AnimationUtils.loadLayoutAnimation(MyApplication.getAppContext(),R.anim.layout_down);
+            animationController = AnimationUtils.loadLayoutAnimation(getContext(),R.anim.layout_down);
         }
         else {
             Constants.isAlternative = true;
-            animationController = AnimationUtils.loadLayoutAnimation(MyApplication.getAppContext(),R.anim.layout_up);
+            animationController = AnimationUtils.loadLayoutAnimation(getActivity(),R.anim.layout_up);
         }
 
-
         recyclerView.setLayoutAnimation(animationController);
+
+    //    recyclerView.getAdapter().notifyDataSetChanged();
         recyclerView.setAdapter(adapter);
         recyclerView.scheduleLayoutAnimation();
     }
