@@ -1,6 +1,5 @@
 package com.hextorm.sampleproject.article;
 
-
 import android.app.ProgressDialog;
 
 import android.arch.lifecycle.MutableLiveData;
@@ -12,7 +11,7 @@ import android.graphics.PorterDuff;
 
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
-import android.support.design.widget.NavigationView;
+
 import android.support.v4.app.Fragment;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.view.ViewPager;
@@ -23,12 +22,10 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 
 import android.util.Log;
-import android.view.Gravity;
+
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.WindowManager;
-import android.widget.SearchView;
 
 
 import com.hextorm.sampleproject.Constants;
@@ -65,8 +62,6 @@ public class ArticleActivity extends AppCompatActivity implements ArticleNavigat
     //View binding
     ActivityMainBinding binding;
 
-    ArticleFragment articleFragment;
-
     ViewPagerAdapter viewPagerAdapter;
 
     NetworkStateReceiver broadcastReceiver;
@@ -102,7 +97,7 @@ public class ArticleActivity extends AppCompatActivity implements ArticleNavigat
         binding.collapsingToolBar.setTitleEnabled(false);
         binding.toolbar.setTitle("");
 
-       // Broadcast Receiver -> it notifies us about condition of internet connectivity
+        // Broadcast Receiver -> it notifies us about condition of internet connectivity
         broadcastReceiver = new NetworkStateReceiver(binding.relativeLayout);
         registerReceiver(broadcastReceiver, new IntentFilter(RECEIVER_ACTION));
 
@@ -266,6 +261,8 @@ public class ArticleActivity extends AppCompatActivity implements ArticleNavigat
                         MenuItem searchItem = binding.toolbar.getMenu().findItem(R.id.toolbar_search_item);
 
                         android.support.v7.widget.SearchView searchView = (android.support.v7.widget.SearchView) searchItem.getActionView();
+
+                        
 
                         searchView.setOnQueryTextListener(new android.support.v7.widget.SearchView.OnQueryTextListener() {
                             @Override

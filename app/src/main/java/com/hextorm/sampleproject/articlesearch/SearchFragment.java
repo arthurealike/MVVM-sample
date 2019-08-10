@@ -12,7 +12,9 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.ProgressBar;
+import android.widget.TextView;
 
 import com.hextorm.sampleproject.Article;
 import com.hextorm.sampleproject.R;
@@ -27,6 +29,9 @@ public class SearchFragment extends Fragment {
     RecyclerView.LayoutManager layoutManager;
     ProgressBar progressBar;
 
+    TextView isArticlesLoaded;
+    ImageView imageView;
+
     SearchViewModel viewModel;
 
     @Nullable
@@ -38,9 +43,13 @@ public class SearchFragment extends Fragment {
 
         recyclerView = view.findViewById(R.id.search_recyclerView);
         progressBar = view.findViewById(R.id.search_progressBar);
+        isArticlesLoaded = view.findViewById(R.id.isArticlesLoaded);
+        imageView = view.findViewById(R.id.imageView2);
 
+        progressBar.bringToFront();
         layoutManager = new LinearLayoutManager(getContext());
         setUpRecyclerView(getContext());
+
 
         Observer<Boolean> progressBarVisibilityObserver = (@Nullable Boolean visibility) -> {
             if (visibility == null) return;
@@ -49,6 +58,11 @@ public class SearchFragment extends Fragment {
         };
 
         Observer<List<Article>> listObserver = (@Nullable List<Article> articles) -> {
+            if (articles == null || articles.isEmpty()) {
+                onDataLoaded(false);
+                return;
+            }
+            onDataLoaded(true);
             adapter.setArticleList(articles);
         };
 
@@ -56,6 +70,17 @@ public class SearchFragment extends Fragment {
         viewModel.getArticleList().observe(this, listObserver);
 
         return view;
+    }
+
+    void onDataLoaded(boolean isAvailable) {
+        imageView.setVisibility(View.INVISIBLE);
+        recyclerView.setVisibility(View.VISIBLE);
+        isArticlesLoaded.setVisibility(View.INVISIBLE);
+        if (!isAvailable) {
+            recyclerView.setVisibility(View.INVISIBLE);
+            isArticlesLoaded.setVisibility(View.VISIBLE);
+            imageView.setVisibility(View.VISIBLE);
+        }
     }
 
     public void loadArticleList(String keyword) {

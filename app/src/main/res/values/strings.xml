@@ -44,6 +44,9 @@ Now, choose ONE of the 12 profiles in “A Star Is Made: 12 Performers Show What
     <string name="nav_header_desc">Navigation header</string>
     <string name="action_settings">Settings</string>
 
+    <string name="onDataNotAvailable">Something went wrong :(</string>
+    <string name="keywordNotAvailable">Oops. Something went wrong!</string>
+
     <string name="menu_home">Home</string>
     <string name="menu_gallery">Gallery</string>
     <string name="menu_slideshow">Slideshow</string>

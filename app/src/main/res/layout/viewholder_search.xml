@@ -36,7 +36,7 @@
             android:maxLength="7"
             android:maxLines="1"
             android:text="TextView"
-            android:textAlignment="center"
+            android:textAlignment="textEnd"
             android:textColor="@color/colorWhite"
             android:textSize="8sp" />
     </LinearLayout>

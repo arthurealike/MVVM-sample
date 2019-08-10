@@ -90,7 +90,7 @@ public class ArticleFragment extends Fragment {
         LayoutAnimationController animationController = null;
         if (Constants.isAlternative) {
             Constants.isAlternative = false;
-            animationController = AnimationUtils.loadLayoutAnimation(getContext(),R.anim.layout_down);
+            animationController = AnimationUtils.loadLayoutAnimation(getActivity(),R.anim.layout_down);
         }
         else {
             Constants.isAlternative = true;
