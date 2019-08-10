@@ -9,18 +9,12 @@ Nearly 40 years ago, Frank Sinatra sang, “If I can make it there, I’ll make 
 
 Have you ever had dreams of making it big as a performer?
 
-In today’s articleEntity, The New York Times Magazine celebrates 12 performers — ages 13 to 72, including a gospel singer and a sword swallower — trying to make it in New York City.
-
-First, scroll through the articleEntity and watch each video clip showcasing the 12 performers.
-
 </string>
     <string name="sample_article2">What do you notice about the performers profiled in the articleEntity? What do you imagine are the pleasures and rewards for their types of performances? What do you imagine are the challenges?
 
 Now, choose ONE of the 12 profiles in “A Star Is Made: 12 Performers Show What It Takes to Light Up the Stage in New York City.” Read the articleEntity, watch the accompanying video and answer the following questions:
 
-1. Why did you select the articleEntity and performer you did? What did you find interesting about the person or type of performance?
-
-2. Why did your performer choose that specific type of performance? What first drew her or him to it?</string>
+1. Why did you select the articleEntity and performer you did? </string>
 
     <string-array name="navigation_menu">
         <item>Home</item>
@@ -34,10 +28,26 @@ Now, choose ONE of the 12 profiles in “A Star Is Made: 12 Performers Show What
     <string name="Profile_age">19</string>
     <string name="Profile_Description">The baddest man alive.!</string>
 
+    <string name="open">Open</string>
+    <string name="close">Close</string>
 
     <string name="nav_home">Home</string>
     <string name="nav_search">Search</string>
     <string name="nav_base">Base</string>
     <string name="nav_folder">Archive</string>
     <string name="nav_profile">Profile</string>
+    <string name="title_activity_main2">MainActivity2</string>
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+    <string name="nav_header_title">M. Erkam Badın</string>
+    <string name="nav_header_subtitle">https://github.com/arthurealike</string>
+    <string name="nav_header_desc">Navigation header</string>
+    <string name="action_settings">Settings</string>
+
+    <string name="menu_home">Home</string>
+    <string name="menu_gallery">Gallery</string>
+    <string name="menu_slideshow">Slideshow</string>
+    <string name="menu_tools">Tools</string>
+    <string name="menu_share">Share</string>
+    <string name="menu_send">Send</string>
 </resources>

@@ -12,14 +12,18 @@ import android.graphics.PorterDuff;
 
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
+import android.support.design.widget.NavigationView;
 import android.support.v4.app.Fragment;
+import android.support.v4.view.GravityCompat;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.ActionBar;
 
+import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 
 import android.util.Log;
+import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -67,6 +71,8 @@ public class ArticleActivity extends AppCompatActivity implements ArticleNavigat
 
     NetworkStateReceiver broadcastReceiver;
 
+    ActionBarDrawerToggle drawerToggle;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -82,18 +88,21 @@ public class ArticleActivity extends AppCompatActivity implements ArticleNavigat
             PopMessages.makeConnectivityCheckSnack(binding.bottomNavigationView, this, visibility);
         };
 
+        drawerToggle = new ActionBarDrawerToggle(this, binding.drawerLayout, R.string.open, R.string.close);
+        binding.drawerLayout.addDrawerListener(drawerToggle);
+        drawerToggle.syncState();
+
+
         isConnectionAvailable.observe(this, snackBarObserver);
 
         setUpToolBar();
         setUpBottomNavigationBar();
         setUpViewPager();
 
-        articleFragment = new ArticleFragment();
-
         binding.collapsingToolBar.setTitleEnabled(false);
-
         binding.toolbar.setTitle("");
 
+       // Broadcast Receiver -> it notifies us about condition of internet connectivity
         broadcastReceiver = new NetworkStateReceiver(binding.relativeLayout);
         registerReceiver(broadcastReceiver, new IntentFilter(RECEIVER_ACTION));
 
@@ -172,14 +181,6 @@ public class ArticleActivity extends AppCompatActivity implements ArticleNavigat
         return true;
     }
 
-/*
-    void replaceFragment(Fragment fragment) {
-        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-        transaction.add(R.id.frameLayout, fragment);
-        transaction.commit();
-    }
-*/
-
     void onLoading() {
         ProgressDialog dialog = ProgressDialog.show(this, "", "", true);
     }
@@ -187,8 +188,17 @@ public class ArticleActivity extends AppCompatActivity implements ArticleNavigat
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
+            case android.R.id.home:
+                Log.d("home", "home");
+                if (binding.drawerLayout.isDrawerOpen(GravityCompat.START)) {
+                    binding.drawerLayout.closeDrawer(GravityCompat.START);
+                } else {
+                    binding.drawerLayout.openDrawer(GravityCompat.START);
+                }
+                break;
+
             case R.id.menu_1:
-                //setting
+                Log.d("menu1", "clicked");
                 break;
             case R.id.menu_2:
                 //feedback
@@ -218,6 +228,7 @@ public class ArticleActivity extends AppCompatActivity implements ArticleNavigat
         ActionBar actionBar = getSupportActionBar();
         actionBar.setHomeAsUpIndicator(R.drawable.ic_menu_grey_24dp);
         actionBar.setDisplayHomeAsUpEnabled(true);
+        ;
     }
 
     List<Fragment> createFragmentList() {
@@ -287,28 +298,6 @@ public class ArticleActivity extends AppCompatActivity implements ArticleNavigat
 
                 binding.bottomNavigationView.setVisibility(View.VISIBLE);
 
-                /*
-                try {
-                    if (i == 0) {
-                        binding.toolbar.getMenu().clear();
-                        binding.toolbar.inflateMenu(R.menu.toolbar_list);
-                        binding.toolbar.getMenu().findItem(R.id.menu_3).setVisible(true);
-                    } else {
-                        if (i == 1) {
-                            binding.toolbar.getMenu().clear();
-                            binding.toolbar.inflateMenu(R.menu.toolbar_search);
-                        }
-
-                        binding.toolbar.getMenu().findItem(R.id.menu_3).setVisible(false);
-                    }
-                } catch (NullPointerException e) {
-                    Log.e(e.getClass().getSimpleName(), e.getMessage());
-                }
-
-*/
-                //binding.toolbar.setVisibility(View.GONE);
-
-
                 Log.d("ViewPager:onPageScrolled  ", "i = " + i + " , v = " + v + " , il = " + i1);
             }
 
@@ -365,7 +354,7 @@ public class ArticleActivity extends AppCompatActivity implements ArticleNavigat
 
     @Override
     public void onArticleClicked() {
-        //you'll do nothing
+        // unused function
     }
 
 }

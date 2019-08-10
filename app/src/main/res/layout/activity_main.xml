@@ -1,4 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
+
+
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
@@ -11,108 +13,128 @@
 
     </data>
 
-    <RelativeLayout
-        android:id="@+id/relativeLayout"
+    <android.support.v4.widget.DrawerLayout
+        android:id="@+id/drawerLayout"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:layout_gravity="start"
+        tools:openDrawer="start">
 
-        <android.support.design.widget.CoordinatorLayout
-
+        <RelativeLayout
+            android:id="@+id/relativeLayout"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_above="@+id/bottomNavigationView"
-            android:background="@color/colorPrimaryDark"
-            app:statusBarBackground="@color/colorPrimaryDark">
+            android:layout_height="match_parent">
 
-            <android.support.design.widget.AppBarLayout
-                android:id="@+id/appbar"
+
+            <android.support.design.widget.CoordinatorLayout
+
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                android:layout_height="match_parent"
+                android:layout_above="@+id/bottomNavigationView"
+                android:background="@color/colorPrimaryDark"
+                app:statusBarBackground="@color/colorPrimaryDark">
 
-                <android.support.design.widget.CollapsingToolbarLayout
-                    android:id="@+id/collapsingToolBar"
+                <android.support.design.widget.AppBarLayout
+                    android:id="@+id/appbar"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    app:collapsedTitleGravity="bottom|center"
-                    app:expandedTitleGravity="bottom"
-                    app:layout_scrollFlags="scroll|enterAlways"
-                    app:toolbarId="@+id/toolbar">
+                    android:layout_height="wrap_content">
 
-                    <android.support.v7.widget.Toolbar
-                        android:id="@+id/toolbar"
-                        style="@style/Toolbar"
+                    <android.support.design.widget.CollapsingToolbarLayout
+                        android:id="@+id/collapsingToolBar"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
-                        android:background="@color/colorPrimary"
-                        android:gravity="center"
-                        android:minHeight="?attr/actionBarSize"
-                        app:layout_collapseMode="pin"
-                        app:popupTheme="@style/menuPopUpTheme"
-                        app:titleMarginStart="40dp"
-                        app:titleTextColor="#FFFFFF">
+                        app:collapsedTitleGravity="bottom|center"
+                        app:expandedTitleGravity="bottom"
+                        app:layout_scrollFlags="scroll|enterAlways"
+                        app:toolbarId="@+id/toolbar">
 
-                        <android.support.constraint.ConstraintLayout
+                        <android.support.v7.widget.Toolbar
+                            android:id="@+id/toolbar"
+                            style="@style/Toolbar"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:foregroundGravity="center"
-                            android:layoutDirection="locale">
+                            android:layout_gravity="center"
+                            android:background="@color/colorPrimary"
+                            android:gravity="center"
+                            android:minHeight="?attr/actionBarSize"
+                            app:layout_collapseMode="pin"
+                            app:popupTheme="@style/menuPopUpTheme"
+                            app:titleMarginStart="40dp"
+                            app:titleTextColor="#FFFFFF">
 
-                            <TextView
-                                android:layout_width="wrap_content"
+                            <android.support.constraint.ConstraintLayout
+                                android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                android:layout_marginTop="8dp"
-                                android:layout_marginBottom="8dp"
-                                android:text="@string/title"
-                                android:textAppearance="@style/ExpandedTitle"
-                                android:textColor="#FAFAFA"
-                                android:textSize="21sp"
-                                app:layout_constraintBottom_toBottomOf="parent"
-                                app:layout_constraintStart_toStartOf="parent"
-                                app:layout_constraintTop_toTopOf="parent" />
+                                android:foregroundGravity="center"
+                                android:layoutDirection="locale">
 
-                        </android.support.constraint.ConstraintLayout>
-                    </android.support.v7.widget.Toolbar>
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginTop="8dp"
+                                    android:layout_marginBottom="8dp"
+                                    android:text="@string/title"
+                                    android:textAppearance="@style/ExpandedTitle"
+                                    android:textColor="#FAFAFA"
+                                    android:textSize="21sp"
+                                    app:layout_constraintBottom_toBottomOf="parent"
+                                    app:layout_constraintStart_toStartOf="parent"
+                                    app:layout_constraintTop_toTopOf="parent" />
 
-                </android.support.design.widget.CollapsingToolbarLayout>
-            </android.support.design.widget.AppBarLayout>
+                            </android.support.constraint.ConstraintLayout>
+                        </android.support.v7.widget.Toolbar>
 
-            <android.support.v4.widget.NestedScrollView
-                android:id="@+id/nestedScrollView"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:fillViewport="true"
-                app:layout_anchor="@+id/appbar"
-                app:layout_behavior="android.support.design.widget.AppBarLayout$ScrollingViewBehavior">
+                    </android.support.design.widget.CollapsingToolbarLayout>
+                </android.support.design.widget.AppBarLayout>
 
-                <LinearLayout
+                <android.support.v4.widget.NestedScrollView
+                    android:id="@+id/nestedScrollView"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent">
+                    android:layout_height="match_parent"
+                    android:fillViewport="true"
+                    app:layout_anchor="@+id/appbar"
+                    app:layout_behavior="android.support.design.widget.AppBarLayout$ScrollingViewBehavior">
 
-                    <android.support.v4.view.ViewPager
-                        android:id="@+id/viewPager"
+                    <LinearLayout
                         android:layout_width="match_parent"
-                        android:layout_height="match_parent" />
-                </LinearLayout>
+                        android:layout_height="match_parent">
+
+                        <android.support.v4.view.ViewPager
+                            android:id="@+id/viewPager"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent" />
+                    </LinearLayout>
 
 
-            </android.support.v4.widget.NestedScrollView>
+                </android.support.v4.widget.NestedScrollView>
 
-        </android.support.design.widget.CoordinatorLayout>
+            </android.support.design.widget.CoordinatorLayout>
 
-        <android.support.design.widget.BottomNavigationView
-            android:id="@+id/bottomNavigationView"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_alignParentBottom="true"
-            android:layout_gravity="bottom"
-            android:background="@color/colorPrimary"
-            app:itemIconTint="@drawable/navigation_tab_item"
-            app:itemTextColor="@drawable/navigation_tab_item"
-            app:labelVisibilityMode="labeled"
-            app:menu="@menu/bottom_navigation_menu" />
+            <android.support.design.widget.BottomNavigationView
+                android:id="@+id/bottomNavigationView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignParentBottom="true"
+                android:layout_gravity="bottom"
+                android:background="@color/colorPrimary"
+                app:itemIconTint="@drawable/navigation_tab_item"
+                app:itemTextColor="@drawable/navigation_tab_item"
+                app:labelVisibilityMode="labeled"
+                app:menu="@menu/bottom_navigation_menu" />
 
-    </RelativeLayout>
+        </RelativeLayout>
+
+        <android.support.design.widget.NavigationView
+            android:id="@+id/nav_view"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_gravity="start"
+            android:background="@color/colorWhite"
+            android:fitsSystemWindows="true"
+            app:headerLayout="@layout/nav_header_main2"
+            app:menu="@menu/navigation_drawer" />
+
+    </android.support.v4.widget.DrawerLayout>
 
 </layout>
