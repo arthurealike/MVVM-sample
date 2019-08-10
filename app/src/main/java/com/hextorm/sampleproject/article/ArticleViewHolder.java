@@ -28,7 +28,7 @@ public class ArticleViewHolder extends BaseViewHolder<Article> {
 
     public static Context context;
 
-    @BindView(R.id.tvTitle)
+    @BindView(R.id.tvTitle_alt)
     TextView tvTitle;
     @BindView(R.id.tvType)
     TextView tvType;

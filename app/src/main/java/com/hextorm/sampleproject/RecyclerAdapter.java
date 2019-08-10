@@ -10,7 +10,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.hextorm.sampleproject.article.ArticleViewHolder;
-import com.hextorm.sampleproject.model.ArticleApiResponse;
+import com.hextorm.sampleproject.articlesearch.SearchViewHolder;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -18,13 +18,16 @@ import java.util.List;
 public class RecyclerAdapter extends RecyclerView.Adapter<BaseViewHolder> {
 
     Context context;
+    boolean isSearchable;
+
 
     @Nullable
     private List<Article> articleList = new ArrayList<>();
 
-    public RecyclerAdapter(Context context, List<Article> articleList) {
+    public RecyclerAdapter(Context context, List<Article> articleList,boolean isSearchable) {
         this.context = context;
         this.articleList = articleList;
+        this.isSearchable = isSearchable;
     }
 
     public void setArticleList(List<Article> articleList) {
@@ -38,13 +41,22 @@ public class RecyclerAdapter extends RecyclerView.Adapter<BaseViewHolder> {
         Log.d("onCreateViewHolder","entered");
         Context context = viewGroup.getContext();
         View itemLayout;
-        if(Constants.isAlternative) {
-             itemLayout = LayoutInflater.from(context).inflate(R.layout.viewholder_alternative, viewGroup, false);
+        if(isSearchable) {
+             itemLayout = LayoutInflater.from(context).inflate(R.layout.viewholder_search, viewGroup,false);
+             BaseViewHolder viewHolder = new SearchViewHolder(itemLayout, context);
+             return viewHolder;
         }
-        else {
-             itemLayout = LayoutInflater.from(context).inflate(R.layout.viewholder_activity, viewGroup, false);
 
+        else {
+            if(Constants.isAlternative) {
+                itemLayout = LayoutInflater.from(context).inflate(R.layout.viewholder_alternative, viewGroup, false);
+            }
+            else {
+                itemLayout = LayoutInflater.from(context).inflate(R.layout.viewholder_activity, viewGroup, false);
+
+            }
         }
+
         BaseViewHolder viewHolder = new ArticleViewHolder(itemLayout, context);
         return viewHolder;
     }
@@ -58,6 +70,7 @@ public class RecyclerAdapter extends RecyclerView.Adapter<BaseViewHolder> {
     public long getItemId(int position) {
         return articleList.get(position).getmId();
     }
+
 
     @Override
     public int getItemCount() {

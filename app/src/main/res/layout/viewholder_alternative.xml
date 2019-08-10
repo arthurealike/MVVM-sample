@@ -33,7 +33,7 @@
             android:textColor="@color/colorWhite" />
 
         <TextView
-            android:id="@+id/tvTitle"
+            android:id="@+id/tvTitle-alt"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="left"

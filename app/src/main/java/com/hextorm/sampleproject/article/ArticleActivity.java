@@ -23,6 +23,8 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.WindowManager;
+import android.widget.SearchView;
 
 
 import com.hextorm.sampleproject.Constants;
@@ -56,7 +58,6 @@ public class ArticleActivity extends AppCompatActivity implements ArticleNavigat
 
     public static MutableLiveData<Boolean> isConnectionAvailable = new MutableLiveData<>();
 
-
     //View binding
     ActivityMainBinding binding;
 
@@ -71,8 +72,6 @@ public class ArticleActivity extends AppCompatActivity implements ArticleNavigat
         super.onCreate(savedInstanceState);
 
         isConnectionAvailable.setValue(true);
-
-
 
         Constants.getUrl();
 
@@ -103,15 +102,33 @@ public class ArticleActivity extends AppCompatActivity implements ArticleNavigat
     @Override
     protected void onResume() {
         super.onResume();
+        try {
+            binding.toolbar.getMenu().findItem(R.id.toolbar_search_item).setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
+                @Override
+                public boolean onMenuItemClick(MenuItem item) {
+                    binding.bottomNavigationView.setVisibility(View.GONE);
+                    binding.bottomNavigationView.setClickable(false);
+                    return true;
+                }
+            });
+        } catch (NullPointerException e) {
+            Log.e("Toolbar: NullPointerException", e.getLocalizedMessage());
+        }
         //PopMessages.makeConnectivityCheckSnack(binding.relativeLayout,this,NetworkState.haveNetworkConnection(this));
     }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        unregisterReceiver(broadcastReceiver);
+    }
+
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.toolbar_list, menu);
         return true;
     }
-
 
     /**
      * Bottom Navigation View
@@ -124,20 +141,17 @@ public class ArticleActivity extends AppCompatActivity implements ArticleNavigat
 
         binding.toolbar.setVisibility(View.VISIBLE);
 
-
         switch (menuItem.getItemId()) {
             case R.id.bnm_home:
                 binding.viewPager.setCurrentItem(HOME_FRAGMENT);
                 Log.d("onNavigationItemSelected: ", " HOME_FRAGMENT");
-                binding.toolbar.getMenu().clear();
-                binding.toolbar.inflateMenu(R.menu.toolbar_list);
 
                 break;
             case R.id.bnm_search:
                 binding.viewPager.setCurrentItem(SEARCH_FRAGMENT);
                 Log.d("onNavigationItemSelected: ", " SEARCH_FRAGMENT");
-                binding.toolbar.getMenu().clear();
-                binding.toolbar.inflateMenu(R.menu.toolbar_search);
+                //   binding.toolbar.getMenu().clear();
+                //   binding.toolbar.inflateMenu(R.menu.toolbar_search);
 
                 break;
             case R.id.bnm_base:
@@ -226,8 +240,7 @@ public class ArticleActivity extends AppCompatActivity implements ArticleNavigat
                     if (i == 0) {
                         binding.toolbar.getMenu().clear();
                         binding.toolbar.inflateMenu(R.menu.toolbar_list);
-                    }
-                    else if(i == 1) {
+                    } else if (i == 1) {
                         binding.toolbar.getMenu().clear();
                         binding.toolbar.inflateMenu(R.menu.toolbar_search);
                         binding.toolbar.getOverflowIcon().setColorFilter(getResources().getColor(R.color.colorGray), PorterDuff.Mode.SRC_ATOP);
@@ -239,15 +252,40 @@ public class ArticleActivity extends AppCompatActivity implements ArticleNavigat
                                 return true;
                             }
                         });
-                    }
-                    else {
+                        MenuItem searchItem = binding.toolbar.getMenu().findItem(R.id.toolbar_search_item);
+
+                        android.support.v7.widget.SearchView searchView = (android.support.v7.widget.SearchView) searchItem.getActionView();
+
+                        searchView.setOnQueryTextListener(new android.support.v7.widget.SearchView.OnQueryTextListener() {
+                            @Override
+                            public boolean onQueryTextSubmit(String s) {
+                                try {
+                                    Fragment activeFragment = viewPagerAdapter.getItem(SEARCH_FRAGMENT);
+                                    Log.i("MainActivity: ActiveSearchFragment", activeFragment.toString());
+                                    ((SearchFragment) activeFragment).loadArticleList(s);
+                                } catch (NullPointerException e) {
+                                    Log.e("MainActivity: Search_view:onQueryTextSubmit -> ", e.getMessage());
+                                    return false;
+                                }
+                                return false;
+                            }
+
+                            @Override
+                            public boolean onQueryTextChange(String s) {
+                                viewPagerAdapter.getItem(SEARCH_FRAGMENT);
+                                return false;
+                            }
+                        });
+
+                    } else {
                         binding.toolbar.getMenu().clear();
                         binding.toolbar.inflateMenu(R.menu.toolbar_default);
                     }
-                }
-                else {
+                } else {
                     binding.toolbar.getMenu().clear();
                 }
+
+                binding.bottomNavigationView.setVisibility(View.VISIBLE);
 
                 /*
                 try {

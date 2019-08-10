@@ -71,7 +71,7 @@ public class ArticleFragment extends Fragment {
 
     void setUpRecyclerView(Context context) {
         //Create Adapter && bind it
-        adapter = new RecyclerAdapter(context, null);
+        adapter = new RecyclerAdapter(context, null,false);
 
         adapter.setHasStableIds(true);
 
@@ -87,7 +87,6 @@ public class ArticleFragment extends Fragment {
     }
 
     void changeListType() {
-
         LayoutAnimationController animationController = null;
         if (Constants.isAlternative) {
             Constants.isAlternative = false;
