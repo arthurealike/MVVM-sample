@@ -13,17 +13,13 @@ Enjoy it, i know it could be completed but there's no time to waste with Java. T
 
 ![alt text](https://i1.wp.com/www.simplifiedcoding.net/wp-content/uploads/2019/06/android-mvvm-architecture.png?resize=960%2C720&ssl=1)
 
-
 GIFs 
 *Especially, i want to notice that there is a list- which have an own layout(viewholder) interchangeable with another one. This technique is being used on many apps on the market,
 quite honestly, i don't have an idea what their way of doing that, it's my approach but i'm not pretentious.
 
-Gif1
+Consider that it is low-fps.
+
+<img src="https://media.giphy.com/media/Xzp1eaTby28Ks0oB8s/giphy-downsized-large.gif"/>
 
 
 
-& 
-
-
-
-Gif 2
